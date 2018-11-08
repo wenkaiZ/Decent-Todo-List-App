@@ -1,0 +1,65 @@
+#add_div{
+    border-bottom: #ccc solid 3px;
+    background-color: rgb(120, 166, 250);
+  }
+  svg{
+      width: 70px;
+      height:70px;
+    }
+    %finish_message{
+        margin-top: 15px;
+      position: relative;
+      float: right;
+      width:15%;
+      display: inline-block;
+    }
+    #finish_tag{
+      @extend %finish_message;
+    }
+    #unfinish_tag{
+        @extend %finish_message;
+      }
+    %cicrle_message{
+        cx:60px;
+        cy:50px;
+        r:9px;
+    }
+    
+    svg +span{
+        font-size: 20px;
+        font-weight: bold;
+        position: absolute;
+        top: 45%;
+        left: 50%;
+      }
+      circle{
+          @extend%cicrle_message;
+      }
+    circle.finish{
+      stroke:rgb(127, 216, 119);
+      fill:rgb(127, 216, 119);
+    }
+    circle.unfinish{
+        stroke:rgb(247, 87, 87);
+        fill:rgb(247, 87, 87);
+    }
+    button {
+        background-color: white; /* Green */
+        border: 2px solid rgb(68, 111, 175);
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        border-radius: 12px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        outline: none;
+        margin: 30px;
+      }
+      button:hover {
+        background-color: #555555; /* Green */
+        color: #ccc;
+      }

@@ -1,0 +1,29 @@
+#navigation_bar {
+    height: 80px;
+    border-bottom: #ccc solid 3px;
+    background-color: rgb(249, 210  , 77);
+  }
+  #application_name {
+    float: left;
+    font-size: 20px;
+    line-height: 80px;
+    padding: 0 3%;
+    font-weight: 500;
+  }
+  %appalication_background{
+      background-color: #555555;
+      color: #ccc;
+  }
+  #application_name:hover{
+    @extend %appalication_background;
+  }
+  #username {
+    float: right;
+    font-size: 20px;
+    line-height: 80px;
+    padding: 0 3%;
+    font-weight: 500;
+  }
+  #username:hover{
+      @extend %appalication_background;
+  }
