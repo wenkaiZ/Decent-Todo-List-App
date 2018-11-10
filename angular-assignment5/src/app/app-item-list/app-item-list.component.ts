@@ -1,7 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Injector } from "@angular/core";
-import { by } from "protractor";
+
 
 @Component({
   selector: "app-app-item-list",
@@ -12,22 +11,29 @@ export class AppItemListComponent implements OnInit {
   requestURL = "https://api.myjson.com/bins/dh0wu";
   //requestURL='https://api.github.com/users/seeschweiler';
   
-  id = 0;
+  id :number= 0;
   update = new Map();
   UserData: UserResponse;
-  show_modal($scope):void
+  delete_mark:boolean=true;
+  show_modal(event):void
   {
     
   }
+  finish(event):void{
+
+  }
   del():void{
     //document.getElementById("#todo_item_div").innerText="okkk";
-    console.log("ok");
+    
+    this.delete_mark=false;
   }
   
   constructor(private http: HttpClient) {}
   ngOnInit() {
     this.http.get<UserResponse>(this.requestURL).subscribe(data => {
       this.UserData = data["list"];
+
+      
     });
     
   }

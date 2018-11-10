@@ -1,10 +1,10 @@
-<div id="todo_item_div" >
-  <div class="item"  *ngFor="let x of UserData on-finish">
+<div id="todo_item_div" class="todo_item_area">
+  <div class="item"  *ngFor="let x of UserData on-finish" >
     <div class="title_div" (click)="show_modal">
-      <div class="title">{{x.title}}</div>
-      <div class="delete" (click)="del()"><span>✖</span></div>
+      <div class="title" [ngClass]="{'finish_mark': false}"   appFinishDirective >{{x.title}}</div>
+      <div class="delete" [ngClass]="{'finish_color':false}" appDeleteDirective><span >✖</span></div>
     </div>
-    <div class="content">{{x.todo_item}}</div>
+    <div class="content"  appShowdetailDirective>{{x.todo_item}}</div>
     <div class="end">
       <div class="author">{{x.author}}</div>
       <div class="date">{{x.date|date:'yyyy-MM-dd '}}</div>
@@ -23,8 +23,8 @@
       <div id="date"><span>Date:&nbsp;</span><input type="text" /></div>
     </div>
     <div class="modal-b clearfix">
-      <button class="fl cancel">Cancel</button>
-      <button class="fr save">Save</button>
+      <button class="fl cancel" appCacelModalDirective>Cancel</button>
+      <button class="fr save" appSaveModalDirective>Save</button>
     </div>
   </div>
 </section>
