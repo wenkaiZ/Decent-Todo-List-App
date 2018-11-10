@@ -1,18 +1,30 @@
-<div id="todo_item_div">
-       
-        
+<div id="todo_item_div" >
+  <div class="item"  *ngFor="let x of UserData on-finish">
+    <div class="title_div" (click)="show_modal">
+      <div class="title">{{x.title}}</div>
+      <div class="delete" (click)="del()"><span>✖</span></div>
+    </div>
+    <div class="content">{{x.todo_item}}</div>
+    <div class="end">
+      <div class="author">{{x.author}}</div>
+      <div class="date">{{x.date|date:'yyyy-MM-dd '}}</div>
+    </div>
+    
+  </div>
+  
+  
 </div>
 <section class="modal">
-        <div class="modal-info center-self-xy ">
-            <div class="modal-t">
-                <div id="title" ><span>Title:&nbsp;</span><input type="text"/></div>
-                <div id="content" ><span>Content:&nbsp;</span><textarea></textarea></div>
-                <div id="author" ><span>Author:&nbsp;</span><input type="text"/></div>
-                <div id="date" ><span>Date:&nbsp;</span><input type="text"/></div>
-            </div>
-            <div class="modal-b clearfix">
-                <button class="fl cancel">Cancel</button>
-                <button class="fr save">Save</button>
-            </div>
-        </div>
-    </section>
+  <div class="modal-info center-self-xy ">
+    <div class="modal-t">
+      <div id="title"><span>Title:&nbsp;</span><input type="text" /></div>
+      <div id="content"><span>Content:&nbsp;</span><textarea></textarea></div>
+      <div id="author"><span>Author:&nbsp;</span><input type="text" /></div>
+      <div id="date"><span>Date:&nbsp;</span><input type="text" /></div>
+    </div>
+    <div class="modal-b clearfix">
+      <button class="fl cancel">Cancel</button>
+      <button class="fr save">Save</button>
+    </div>
+  </div>
+</section>

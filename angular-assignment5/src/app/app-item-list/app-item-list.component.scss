@@ -14,6 +14,7 @@
     border-radius: 12px;
   }
   .item{
+    
     @extend %item_message;
     border:2px solid rgb(68, 111, 175) ;
     vertical-align: middle;
