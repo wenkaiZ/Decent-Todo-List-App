@@ -22,61 +22,63 @@ export class AppAddBarComponent implements OnInit {
   showModal() {
     //var items = document.getElementsByClassName("item");
     this.modal_ = document.querySelector('.modal');
-    document.querySelector("#title").children[1].nodeValue='';
-    document.querySelector("#content").children[1].nodeValue='';
-    document.querySelector("#author").children[1].nodeValue=document.getElementById('username').innerText;
-    document.querySelector("#date").children[1].nodeValue=new Date().toLocaleDateString();
+    document.querySelector("#title").children[1].value='';
+    document.querySelector("#content").children[1].value='';
+    document.querySelector("#author").children[1].value=document.getElementById('username').innerText;
+    document.querySelector("#date").children[1].value=new Date().toLocaleDateString();
     this.modal_.style.display = 'block';
     
     //click to close model
+    let temp = this;//
     let cancel = this.modal_.querySelector('.cancel');
     this.renderer.listen(cancel, 'click', function(){
       //close model
-      this.modal_.style.display = 'none';
+      console.log(temp);
+      temp.modal_.style.display = 'none';
   });
     //click to save todo item
     let save=this.modal_.querySelector(".save");
-    this.renderer.listen(save, 'click', this.getInput);
+    this.renderer.listen(save, 'click', function getInput(){
+      let newTitle=document.querySelector("#title").children[1].value;
+      let newContent=document.querySelector("#content").children[1].value;
+      let newAuthor=document.querySelector("#author").children[1].value;
+      let newDate=document.querySelector("#date").children[1].value;
+      if(newTitle===''){
+          alert('You should write something in title area!');
+      }else if(newContent===''){
+          alert('You should write something in content area!');
+      }else{
+          if(newAuthor === ''){
+              newAuthor = document.getElementById('username').value;
+          }
+          if(newDate === ''){
+              newDate = new Date().toLocaleDateString();
+          }
+          
+          // this.newTodoItem = {
+      
+          //   title: newTitle,
+          //   content: newContent,
+          //   author: newAuthor,
+          //   date: newDate,
+            
+          // }
+          console.log(temp);
+          temp.newTodoItem = new TodoItem();
+          temp.newTodoItem.title = newTitle;
+          temp.newTodoItem.author = newAuthor;
+          temp.newTodoItem.content = newContent;
+          temp.newTodoItem.date = newDate;
+          
+          temp.modal_ = document.querySelector('.modal');
+          temp.modal_.style.display = 'none';
+          temp.createNewTodoItem_div();
+      }
+      
+  });
 }
 //get the input from model
-  getInput(){
-    let newTitle=document.querySelector("#title").children[1].nodeValue;
-    let newContent=document.querySelector("#content").children[1].nodeValue;
-    let newAuthor=document.querySelector("#author").children[1].nodeValue;
-    let newDate=document.querySelector("#date").children[1].nodeValue;
-    if(newTitle===''){
-        alert('You should write something in title area!');
-    }else if(newContent===''){
-        alert('You should write something in content area!');
-    }else{
-        if(newAuthor === ''){
-            newAuthor = document.getElementById('username').nodeValue;
-        }
-        if(newDate === ''){
-            newDate = new Date().toLocaleDateString();
-        }
-        
-        // this.newTodoItem = {
-    
-        //   title: newTitle,
-        //   content: newContent,
-        //   author: newAuthor,
-        //   date: newDate,
-          
-        // }
-        console.log(this);
-        this.newTodoItem = new TodoItem();
-        this.newTodoItem.title = newTitle;
-        this.newTodoItem.author = newAuthor;
-        this.newTodoItem.content = newContent;
-        this.newTodoItem.date = newDate;
-        
-        this.modal_ = document.querySelector('.modal');
-        this.modal_.style.display = 'none';
-        this.createNewTodoItem_div();
-    }
-    
-}
+  
 
 createNewTodoItem_div(){
   //create elements
@@ -150,25 +152,25 @@ createNewTodoItem_div(){
       }
       console.log(select);
       //get from the todo item
-      let title= select.getElementsByClassName("title")[0].nodeValue;
-      let content=select.getElementsByClassName("content")[0].nodeValue;
-      let author=select.getElementsByClassName("author")[0].nodeValue;
-      let date=select.getElementsByClassName("date")[0].nodeValue;
+      let title= select.getElementsByClassName("title")[0].value;
+      let content=select.getElementsByClassName("content")[0].value;
+      let author=select.getElementsByClassName("author")[0].value;
+      let date=select.getElementsByClassName("date")[0].value;
 
       //store in modal
-      document.querySelector("#title").children[1].nodeValue=title;
-      document.querySelector("#content").children[1].nodeValue=content;
-      document.querySelector("#author").children[1].nodeValue=author;
-      document.querySelector("#date").children[1].nodeValue=date;
+      document.querySelector("#title").children[1].value=title;
+      document.querySelector("#content").children[1].value=content;
+      document.querySelector("#author").children[1].value=author;
+      document.querySelector("#date").children[1].value=date;
       this.modal_.style.display = 'block';
 
       let save=this.modal_.querySelector(".save");
       this.renderer.listen(save, 'click', ()=>{
           //get from modal and store the change back to selected todo item.
-          select.getElementsByClassName("title")[0].nodeValue = document.querySelector("#title").children[1].nodeValue;
-          select.getElementsByClassName("content")[0].nodeValue = document.querySelector("#content").children[1].nodeValue;
-          select.getElementsByClassName("author")[0].nodeValue = document.querySelector("#author").children[1].nodeValue;
-          select.getElementsByClassName("date")[0].nodeValue = document.querySelector("#date").children[1].nodeValue;
+          select.getElementsByClassName("title")[0].value = document.querySelector("#title").children[1].value;
+          select.getElementsByClassName("content")[0].value = document.querySelector("#content").children[1].value;
+          select.getElementsByClassName("author")[0].value = document.querySelector("#author").children[1].value;
+          select.getElementsByClassName("date")[0].value = document.querySelector("#date").children[1].value;
           this.modal_.style.display = 'none';
       });
   },false);
