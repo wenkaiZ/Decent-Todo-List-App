@@ -12,7 +12,7 @@ import { FinishDirectiveDirective } from './finish-directive.directive';
 import { ShowdetailDirectiveDirective } from './showdetail-directive.directive';
 import { CacelModalDirectiveDirective } from './cacel-modal-directive.directive';
 import { SaveModalDirectiveDirective } from './save-modal-directive.directive';
-
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +29,8 @@ import { SaveModalDirectiveDirective } from './save-modal-directive.directive';
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
