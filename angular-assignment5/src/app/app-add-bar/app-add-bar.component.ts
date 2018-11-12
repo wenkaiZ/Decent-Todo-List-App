@@ -1,6 +1,6 @@
 import { AppComponent } from './../app.component';
 import { TodoItem } from './../todoItem';
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { ElementRef, Renderer } from '@angular/core';
 
 @Component({
@@ -10,26 +10,29 @@ import { ElementRef, Renderer } from '@angular/core';
 })
 export class AppAddBarComponent implements OnInit {
 
+  // @ViewChild('testInput') testIput1;
+  // @ViewChild('testInput') testIput2;
   newTodoItem: TodoItem;
   newTodoItem_div: HTMLElement;
   modal_: HTMLElement;
   addBtn = "Add Task";
   f = "Finished";
   uf = "Unfinished";
-  @Input() todoItem: TodoItem;
   constructor(private  el: ElementRef,private renderer: Renderer) { }
 
 
   createNewTodoItem(){
     this.showModal();
+    //test getting intput
+    //console.log(this.testIput1.nativeElement);
     console.log(this);
   }
   showModal() {
+    
     //var items = document.getElementsByClassName("item");
     this.modal_ = document.querySelector('.modal');
-    document.querySelector("#title").children[1].setAttribute('value', "");
-    document.querySelector("#content").children[1].setAttribute('value', "");
-    
+    document.querySelector("#title").children[1].value = "";
+    document.querySelector("#content").children[1].value = "";
     document.querySelector("#author").children[1].setAttribute('value',document.getElementById('username').innerText);
     console.log( document.querySelector("#author").children[1].getAttribute("value"));
     document.querySelector("#date").children[1].setAttribute('value',new Date().toLocaleDateString());
@@ -45,20 +48,31 @@ export class AppAddBarComponent implements OnInit {
   });
     //click to save todo item
     let save=this.modal_.querySelector(".save");
-    this.renderer.listen(save, 'click', function getInput(){
-      let newTitle=document.querySelector("#title").children[1].nodeValue;
-      console.log(document.querySelector("#title").children[1].getAttribute('value'));
-      console.log(document.querySelector("#author").children[1].getAttribute('value'));
-      let newContent=document.querySelector("#content").children[1].getAttribute('value');
-      let newAuthor=document.querySelector("#author").children[1].getAttribute('value');
-      let newDate=document.querySelector("#date").children[1].getAttribute('value');
+      console.log(save);
+      let saveParent = save.parentElement;
+
+      saveParent.removeChild(save);
+      console.log(saveParent.childElementCount);
+      let newSaveBtn = document.createElement('button');
+      newSaveBtn.classList.add("fr");
+      newSaveBtn.classList.add("save");
+      newSaveBtn.innerText = "save";
+      saveParent.appendChild(newSaveBtn);
+    this.renderer.listen(newSaveBtn, 'click', function getInput(){
+      //用getAttribute('value')get不到input里的内容
+      let newTitle=document.querySelector("#title").children[1].value;
+      // console.log(document.querySelector("#title").children[1].value);
+      // console.log(document.querySelector("#author").children[1].getAttribute('value'));
+      let newContent=document.querySelector("#content").children[1].value;
+      let newAuthor=document.querySelector("#author").children[1].value;
+      let newDate=document.querySelector("#date").children[1].value;
       if(newTitle===''){
           alert('You should write something in title area!');
       }else if(newContent===''){
           alert('You should write something in content area!');
       }else{
           if(newAuthor === ''){
-              newAuthor = document.getElementById('username').getAttribute('value');
+              newAuthor = document.getElementById('username').innerText;
           }
           if(newDate === ''){
               newDate = new Date().toLocaleDateString();
@@ -91,6 +105,7 @@ export class AppAddBarComponent implements OnInit {
 
 createNewTodoItem_div(){
   //create elements
+  console.log(this);
   this.newTodoItem_div = document.createElement('div');
   this.newTodoItem_div.classList.add("item");
 
@@ -154,18 +169,19 @@ createNewTodoItem_div(){
   },false);
 
   //show in model
-  this.newTodoItem_div.addEventListener('click',(event)=>{
-      let select = event.srcElement;
+  this.newTodoItem_div.addEventListener('click',($event)=>{
+      let select = $event.srcElement;
       while(!(select.classList.contains('item'))){
           select = select.parentElement;
       }
       console.log(select);
       //get from the todo item
-      let title= select.getElementsByClassName("title")[0].getAttribute('value');
-      let content=select.getElementsByClassName("content")[0].getAttribute('value');
-      let author=select.getElementsByClassName("author")[0].getAttribute('value');
-      let date=select.getElementsByClassName("date")[0].getAttribute('value');
+      let title= select.getElementsByClassName("title")[0].innerHTML;
+      let content=select.getElementsByClassName("content")[0].innerHTML;
+      let author=select.getElementsByClassName("author")[0].innerHTML;
+      let date=select.getElementsByClassName("date")[0].innerHTML;
 
+      console.log(title,content,author,date);
       //store in modal
       document.querySelector("#title").children[1].setAttribute('value', title);
       document.querySelector("#content").children[1].setAttribute('value', content);
@@ -174,12 +190,23 @@ createNewTodoItem_div(){
       this.modal_.style.display = 'block';
 
       let save=this.modal_.querySelector(".save");
-      this.renderer.listen(save, 'click', ()=>{
+      console.log(save);
+      let saveParent = save.parentElement;
+
+      saveParent.removeChild(save);
+      let newSaveBtn = document.createElement('button');
+      newSaveBtn.classList.add("fr");
+      newSaveBtn.classList.add("save");
+      newSaveBtn.innerText = "save";
+      saveParent.appendChild(newSaveBtn);
+      this.renderer.listen(newSaveBtn, 'click', ()=>{
+        console.log(select);
           //get from modal and store the change back to selected todo item.
-          select.getElementsByClassName("title")[0].setAttribute('value', document.querySelector("#title").children[1].getAttribute('value'));
-          select.getElementsByClassName("content")[0].setAttribute('value', document.querySelector("#content").children[1].getAttribute('value'));
-          select.getElementsByClassName("author")[0].setAttribute('value', document.querySelector("#author").children[1].getAttribute('value'));
-          select.getElementsByClassName("date")[0].setAttribute('value', document.querySelector("#date").children[1].getAttribute('value'));
+          select.getElementsByClassName("title")[0].innerHTML = document.querySelector("#title").children[1].value;
+          select.getElementsByClassName("content")[0].innerHTML = document.querySelector("#content").children[1].value;
+          console.log(select.getElementsByClassName("title")[0].innerHTML);
+          select.getElementsByClassName("author")[0].innerHTML = document.querySelector("#author").children[1].value;
+          select.getElementsByClassName("date")[0].innerHTML = document.querySelector("#date").children[1].value;
           this.modal_.style.display = 'none';
       });
   },false);
