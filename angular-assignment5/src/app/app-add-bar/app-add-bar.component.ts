@@ -30,42 +30,42 @@ export class AppAddBarComponent implements OnInit {
   showModal() {
     
     //var items = document.getElementsByClassName("item");
-    this.modal_ = document.querySelector('.modal');
-    document.querySelector("#title").children[1].value = "";
-    document.querySelector("#content").children[1].value = "";
-    document.querySelector("#author").children[1].setAttribute('value',document.getElementById('username').innerText);
-    console.log( document.querySelector("#author").children[1].getAttribute("value"));
-    document.querySelector("#date").children[1].setAttribute('value',new Date().toLocaleDateString());
+    this.modal_ = document.querySelector('.modal_2');
+    document.querySelector("#title_2").children[1].value = "";
+    document.querySelector("#content_2").children[1].value = "";
+    document.querySelector("#author_2").children[1].setAttribute('value',document.getElementById('username').innerText);
+    console.log( document.querySelector("#author_2").children[1].getAttribute("value"));
+    document.querySelector("#date_2").children[1].setAttribute('value',new Date().toLocaleDateString());
     this.modal_.style.display = 'block';
     
     //click to close model
     let temp = this;//
-    let cancel = this.modal_.querySelector('.cancel');
+    let cancel = this.modal_.querySelector('.cancel_2');
     this.renderer.listen(cancel, 'click', function(){
       //close model
       console.log(temp);
       temp.modal_.style.display = 'none';
   });
     //click to save todo item
-    let save=this.modal_.querySelector(".save");
+    let save=this.modal_.querySelector(".save_2");
       console.log(save);
       let saveParent = save.parentElement;
 
       saveParent.removeChild(save);
       console.log(saveParent.childElementCount);
       let newSaveBtn = document.createElement('button');
-      newSaveBtn.classList.add("fr");
-      newSaveBtn.classList.add("save");
+      newSaveBtn.classList.add("fr_2");
+      newSaveBtn.classList.add("save_2");
       newSaveBtn.innerText = "save";
       saveParent.appendChild(newSaveBtn);
     this.renderer.listen(newSaveBtn, 'click', function getInput(){
       //用getAttribute('value')get不到input里的内容
-      let newTitle=document.querySelector("#title").children[1].value;
+      let newTitle=document.querySelector("#title_2").children[1].value;
       // console.log(document.querySelector("#title").children[1].value);
       // console.log(document.querySelector("#author").children[1].getAttribute('value'));
-      let newContent=document.querySelector("#content").children[1].value;
-      let newAuthor=document.querySelector("#author").children[1].value;
-      let newDate=document.querySelector("#date").children[1].value;
+      let newContent=document.querySelector("#content_2").children[1].value;
+      let newAuthor=document.querySelector("#author_2").children[1].value;
+      let newDate=document.querySelector("#date_2").children[1].value;
       if(newTitle===''){
           alert('You should write something in title area!');
       }else if(newContent===''){
@@ -93,7 +93,7 @@ export class AppAddBarComponent implements OnInit {
           temp.newTodoItem.content = newContent;
           temp.newTodoItem.date = newDate;
           
-          temp.modal_ = document.querySelector('.modal');
+          temp.modal_ = document.querySelector('.modal_2');
           temp.modal_.style.display = 'none';
           temp.createNewTodoItem_div();
       }
@@ -183,30 +183,30 @@ createNewTodoItem_div(){
 
       console.log(title,content,author,date);
       //store in modal
-      document.querySelector("#title").children[1].setAttribute('value', title);
-      document.querySelector("#content").children[1].setAttribute('value', content);
-      document.querySelector("#author").children[1].setAttribute('value', author);
-      document.querySelector("#date").children[1].setAttribute('value', date);
+      document.querySelector("#title_2").children[1].setAttribute('value', title);
+      document.querySelector("#content_2").children[1].setAttribute('value', content);
+      document.querySelector("#author_2").children[1].setAttribute('value', author);
+      document.querySelector("#date_2").children[1].setAttribute('value', date);
       this.modal_.style.display = 'block';
 
-      let save=this.modal_.querySelector(".save");
+      let save=this.modal_.querySelector(".save_2");
       console.log(save);
       let saveParent = save.parentElement;
 
       saveParent.removeChild(save);
       let newSaveBtn = document.createElement('button');
-      newSaveBtn.classList.add("fr");
-      newSaveBtn.classList.add("save");
+      newSaveBtn.classList.add("fr_2");
+      newSaveBtn.classList.add("save_2");
       newSaveBtn.innerText = "save";
       saveParent.appendChild(newSaveBtn);
       this.renderer.listen(newSaveBtn, 'click', ()=>{
         console.log(select);
           //get from modal and store the change back to selected todo item.
-          select.getElementsByClassName("title")[0].innerHTML = document.querySelector("#title").children[1].value;
-          select.getElementsByClassName("content")[0].innerHTML = document.querySelector("#content").children[1].value;
+          select.getElementsByClassName("title")[0].innerHTML = document.querySelector("#title_2").children[1].value;
+          select.getElementsByClassName("content")[0].innerHTML = document.querySelector("#content_2").children[1].value;
           console.log(select.getElementsByClassName("title")[0].innerHTML);
-          select.getElementsByClassName("author")[0].innerHTML = document.querySelector("#author").children[1].value;
-          select.getElementsByClassName("date")[0].innerHTML = document.querySelector("#date").children[1].value;
+          select.getElementsByClassName("author")[0].innerHTML = document.querySelector("#author_2").children[1].value;
+          select.getElementsByClassName("date")[0].innerHTML = document.querySelector("#date_2").children[1].value;
           this.modal_.style.display = 'none';
       });
   },false);
