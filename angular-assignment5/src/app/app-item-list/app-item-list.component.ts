@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./app-item-list.component.scss"]
 })
 export class AppItemListComponent implements OnInit {
-  requestURL = "https://api.myjson.com/bins/dh0wu";
+  requestURL = "../../assets/json/initialize.json";
   //requestURL='https://api.github.com/users/seeschweiler';
   
   id :number= 0;
