@@ -9,9 +9,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
 import { DeleteDirectiveDirective } from './delete-directive.directive';
 import { FinishDirectiveDirective } from './finish-directive.directive';
-import { ShowdetailDirectiveDirective } from './showdetail-directive.directive';
 import { CacelModalDirectiveDirective } from './cacel-modal-directive.directive';
-import { SaveModalDirectiveDirective } from './save-modal-directive.directive';
 import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
@@ -20,9 +18,7 @@ import { FormsModule } from '@angular/forms';
     AppItemListComponent,
     DeleteDirectiveDirective,
     FinishDirectiveDirective,
-    ShowdetailDirectiveDirective,
     CacelModalDirectiveDirective,
-    SaveModalDirectiveDirective,
    
   ],
   imports: [

@@ -1,7 +1,7 @@
 import { AppComponent } from './../app.component';
 import { TodoItem } from './../todoItem';
 import { Component, OnInit, ViewChild} from '@angular/core';
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-app-add-bar',
@@ -12,13 +12,19 @@ export class AppAddBarComponent implements OnInit {
 
   // @ViewChild('testInput') testIput1;
   // @ViewChild('testInput') testIput2;
+  inputItem: TodoItem = {
+    title: "",
+    content: "",
+    author: document.getElementById('username').innerText,
+    date: new Date().toLocaleDateString(),
+  };
   newTodoItem: TodoItem;
   newTodoItem_div: HTMLElement;
   modal_: HTMLElement;
   addBtn = "Add Task";
   f = "Finished";
   uf = "Unfinished";
-  constructor(private  el: ElementRef,private renderer: Renderer) { }
+  constructor(private  el: ElementRef,private renderer: Renderer2) { }
 
 
   createNewTodoItem(){
@@ -26,16 +32,17 @@ export class AppAddBarComponent implements OnInit {
     //test getting intput
     //console.log(this.testIput1.nativeElement);
     console.log(this);
+    console.log(this.el.nativeElement);
   }
   showModal() {
     
     //var items = document.getElementsByClassName("item");
     this.modal_ = document.querySelector('.modal_2');
-    document.querySelector("#title_2").children[1].value = "";
-    document.querySelector("#content_2").children[1].value = "";
-    document.querySelector("#author_2").children[1].setAttribute('value',document.getElementById('username').innerText);
+    this.inputItem.title = "";
+    this.inputItem.content = "";
+    this.inputItem.author = document.getElementById('username').innerText;
+    this.inputItem.date = new Date().toLocaleDateString();
     console.log( document.querySelector("#author_2").children[1].getAttribute("value"));
-    document.querySelector("#date_2").children[1].setAttribute('value',new Date().toLocaleDateString());
     this.modal_.style.display = 'block';
     
     //click to close model
@@ -60,12 +67,12 @@ export class AppAddBarComponent implements OnInit {
       saveParent.appendChild(newSaveBtn);
     this.renderer.listen(newSaveBtn, 'click', function getInput(){
       //用getAttribute('value')get不到input里的内容
-      let newTitle=document.querySelector("#title_2").children[1].value;
+      let newTitle=temp.inputItem.title;
       // console.log(document.querySelector("#title").children[1].value);
       // console.log(document.querySelector("#author").children[1].getAttribute('value'));
-      let newContent=document.querySelector("#content_2").children[1].value;
-      let newAuthor=document.querySelector("#author_2").children[1].value;
-      let newDate=document.querySelector("#date_2").children[1].value;
+      let newContent=temp.inputItem.content;
+      let newAuthor=temp.inputItem.author;
+      let newDate=temp.inputItem.date;
       if(newTitle===''){
           alert('You should write something in title area!');
       }else if(newContent===''){
@@ -125,7 +132,7 @@ createNewTodoItem_div(){
   date_div.classList.add("date");
 
   title.innerText = this.newTodoItem.title+"";
-  content_div.innerHTML="&nbsp;&nbsp;&nbsp;&nbsp;"+this.newTodoItem.content;
+  content_div.innerHTML=this.newTodoItem.content;
   author_div.innerText= this.newTodoItem.author+"";
   date_div.innerText= this.newTodoItem.date+"";
 
@@ -169,6 +176,7 @@ createNewTodoItem_div(){
   },false);
 
   //show in model
+  let temp = this;
   this.newTodoItem_div.addEventListener('click',($event)=>{
       let select = $event.srcElement;
       while(!(select.classList.contains('item'))){
@@ -183,10 +191,10 @@ createNewTodoItem_div(){
 
       console.log(title,content,author,date);
       //store in modal
-      document.querySelector("#title_2").children[1].setAttribute('value', title);
-      document.querySelector("#content_2").children[1].setAttribute('value', content);
-      document.querySelector("#author_2").children[1].setAttribute('value', author);
-      document.querySelector("#date_2").children[1].setAttribute('value', date);
+      temp.inputItem.title = title;
+      temp.inputItem.content = content;
+      temp.inputItem.author = author;
+      temp.inputItem.date = date;
       this.modal_.style.display = 'block';
 
       let save=this.modal_.querySelector(".save_2");
@@ -202,11 +210,11 @@ createNewTodoItem_div(){
       this.renderer.listen(newSaveBtn, 'click', ()=>{
         console.log(select);
           //get from modal and store the change back to selected todo item.
-          select.getElementsByClassName("title")[0].innerHTML = document.querySelector("#title_2").children[1].value;
-          select.getElementsByClassName("content")[0].innerHTML = document.querySelector("#content_2").children[1].value;
+          select.getElementsByClassName("title")[0].innerHTML = temp.inputItem.title;
+          select.getElementsByClassName("content")[0].innerHTML = temp.inputItem.content;
           console.log(select.getElementsByClassName("title")[0].innerHTML);
-          select.getElementsByClassName("author")[0].innerHTML = document.querySelector("#author_2").children[1].value;
-          select.getElementsByClassName("date")[0].innerHTML = document.querySelector("#date_2").children[1].value;
+          select.getElementsByClassName("author")[0].innerHTML = temp.inputItem.author;
+          select.getElementsByClassName("date")[0].innerHTML = temp.inputItem.date;
           this.modal_.style.display = 'none';
       });
   },false);

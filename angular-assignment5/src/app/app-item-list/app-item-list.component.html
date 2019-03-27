@@ -4,7 +4,7 @@
       <div class="title" [ngClass]="{'finish_mark': false}"   appFinishDirective >{{x.title}}</div>
       <div class="delete" [ngClass]="{'finish_color':false}" appDeleteDirective><span >✖</span></div>
     </div>
-    <div class="content"  appShowdetailDirective>{{x.todo_item}}</div>
+    <div class="content"  (click) = "getTarget($event)"  >{{x.todo_item}}</div>
     <div class="end">
       <div class="author">{{x.author}}</div>
       <div class="date">{{x.date|date:'yyyy-MM-dd '}}</div>
@@ -17,14 +17,14 @@
 <section class="modal">
   <div class="modal-info center-self-xy ">
     <div class="modal-t">
-      <div id="title"><span>Title:&nbsp;</span><input type="text" /></div>
-      <div id="content"><span>Content:&nbsp;</span><textarea></textarea></div>
-      <div id="author"><span>Author:&nbsp;</span><input type="text" /></div>
-      <div id="date"><span>Date:&nbsp;</span><input type="text" /></div>
+      <div id="title"><span>Title:&nbsp;</span><input type="text" [(ngModel)]="itemTitle" placeholder="title"/></div>
+      <div id="content"><span>Content:&nbsp;</span><textarea [(ngModel)]="itemContent" placeholder="content"></textarea></div>
+      <div id="author"><span>Author:&nbsp;</span><input type="text" [(ngModel)]="itemAuthor" placeholder="author"/></div>
+      <div id="date"><span>Date:&nbsp;</span><input type="text" [(ngModel)]="itemDate" placeholder="date"/></div>
     </div>
     <div class="modal-b clearfix">
       <button class="fl cancel" appCacelModalDirective>Cancel</button>
-      <button class="fr save" appSaveModalDirective>Save</button>
+      <button class="fr save" (click) = "saveBtn()">Save</button>
     </div>
   </div>
 </section>
